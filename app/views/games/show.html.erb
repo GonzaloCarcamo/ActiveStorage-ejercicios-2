@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p> <strong>Nombre:</strong> <%= @game.name %> </p>
+
+<p> <strong>Piezas:</strong> <%= @game.content %> </p>
+
+<p> <strong>Instrucciones:</strong>
+  <a href="<%= rails_blob_path(@game.instruction, disposition: 'attachment')%>">Descargar PDF</a> </p>
+
+<% if @game.image.attached? %>
+ <p>
+ <strong>Imágen Carátula:</strong>
+ <br>
+ <%= image_tag @game.image.variant(resize: "100x100", type: :grayscale) %>
+ </p>
+<% end %>
+
+<% if @game.images.attached? %>
+
+<p>
+ <strong>Imágenes Piezas:</strong>
+ <br>
+ <% @game.images.each do |image| %>
+
+  <%= image_tag image.variant(resize: "100x100", type: :grayscale) %>
+  <%= link_to 'Remove', delete_image_game_path(@game, image), method: :delete,
+    data: { confirm: 'Are you sure?' } %>
+
+  <% end %>
+</p>
+
+<% end %>
+
+
+
+
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
